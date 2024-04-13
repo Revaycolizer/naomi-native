@@ -96,18 +96,14 @@ export default function Home(){
      ):(<Text style={{textAlign:"center",marginVertical:4}}>Nothing</Text>)}
 
      </ScrollView>)}
-
+{/* 
             { session.role ==="USER"?(<View></View>):(
     <FAB
     icon={'plus'}
     label={''}
-    // extended={isExtended}
     onPress={()=> router.push("/modal")}
-    // visible={visible}
-    // animateFrom={'right'}
-    // iconMode={'static'}
     style={styles.fabStyle}
-  />)}
+  />)} */}
   
 
             </SafeAreaView>

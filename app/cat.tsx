@@ -83,6 +83,10 @@ export default function Home(){
         
       }, []);
 
+      const handleDataInserted = () => {
+       
+        onRefresh();
+      };
       const router = useRouter()
       const [searchQuery, setSearchQuery] = useState('');
     return(
@@ -106,7 +110,7 @@ export default function Home(){
       //  refreshControl={true}
         numColumns={2}
         data={products}
-        renderItem={({ item }) => <ProAdmin key={item.id} item={item} />}
+        renderItem={({ item }) => <ProAdmin key={item.id} item={item} onDataInsert={handleDataInserted}/>}
         keyExtractor={(item) => item.id}
         style={{marginHorizontal: 4 }}
       />
@@ -127,7 +131,7 @@ export default function Home(){
       //  refreshControl={true}
         numColumns={2}
         data={products}
-        renderItem={({ item }) => <Products key={item.id} item={item} />}
+        renderItem={({ item }) => <Products key={item.id} item={item} onDataInsert={handleDataInserted}/>}
         keyExtractor={(item) => item.id}
         style={{marginHorizontal: 4 }}
       />

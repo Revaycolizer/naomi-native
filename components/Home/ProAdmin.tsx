@@ -6,14 +6,12 @@ import { Button, Dialog, Portal, TextInput } from "react-native-paper";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import TextInputMask from 'react-native-text-input-mask';
 import { useToast } from "react-native-toast-notifications";
-interface Props{
-    id:string;
-    name:string;
-    src:string;
-    price:string;
-}
+type UserOrderProps = {
+  item: any; 
+  onDataInsert: () => void; 
+};
 
-export default function ProAdmin({item}:{item:Props}){
+export default function ProAdmin({ item, onDataInsert }: UserOrderProps){
     const [isOpen,setOpen]=useState(false)
     const [location,setL]=useState("")
     const [phone,setP]=useState("")
@@ -57,6 +55,7 @@ export default function ProAdmin({item}:{item:Props}){
                     duration: 4000,
                     animationType: "slide-in",
                   });
+                  onDataInsert()
                open()
                }else{
                 toast.show("Something went wrong", {
@@ -116,6 +115,7 @@ export default function ProAdmin({item}:{item:Props}){
                     duration: 4000,
                     animationType: "slide-in",
                   });
+                  onDataInsert()
                open()
                }else{
                 toast.show("Something went wrong", {

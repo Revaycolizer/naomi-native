@@ -67,6 +67,11 @@ console.log(error)
         
       };
 
+      const handleDataInserted = () => {
+       
+        onRefresh();
+      };
+
       const onRefresh = useCallback(async() => {
         // setRefreshing(true);
         
@@ -102,7 +107,7 @@ console.log(error)
       //  refreshControl={true}
         numColumns={1}
         data={products}
-        renderItem={({ item }) => <AdminOrder key={item.id} item={item} />}
+        renderItem={({ item }) => <AdminOrder key={item.id} item={item} onDataInsert={handleDataInserted}/>}
         keyExtractor={(item) => item.id}
         style={{marginHorizontal: 4 }}
       />
@@ -124,7 +129,7 @@ console.log(error)
       //  refreshControl={true}
         numColumns={1}
         data={products}
-        renderItem={({ item }) => <UserOrder key={item.id} item={item} />}
+        renderItem={({ item }) => <UserOrder key={item.id} item={item} onDataInsert={handleDataInserted}/>}
         keyExtractor={(item) => item.id}
         style={{marginHorizontal: 4 }}
       />

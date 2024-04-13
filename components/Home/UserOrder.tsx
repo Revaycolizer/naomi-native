@@ -6,19 +6,12 @@ import { Button, Dialog, Portal, TextInput } from "react-native-paper";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import TextInputMask from 'react-native-text-input-mask';
 import { useToast } from "react-native-toast-notifications";
-interface Props{
-    id:string;
-    name:string;
-    src:string;
-    price:string;
-    amount:string;
-    location:string;
-    phone:string;
-    status:string;
-    originalPrice:string;
-}
+type UserOrderProps = {
+  item: any; 
+  onDataInsert: () => void; 
+};
 
-export default function UserOrder({item}:{item:Props}){
+export default function UserOrder({ item, onDataInsert }: UserOrderProps){
     const [isOpen,setOpen]=useState(false)
     // const [location,setL]=useState("")
     // const [phone,setP]=useState("")
@@ -83,6 +76,7 @@ export default function UserOrder({item}:{item:Props}){
                     animationType: "slide-in",
                   });
                   setLoading(false)
+                  onDataInsert()
                open()
                }else{
                 toast.show("Something went wrong", {
@@ -142,6 +136,7 @@ export default function UserOrder({item}:{item:Props}){
                     animationType: "slide-in",
                   });
                   setLoading(false)
+                  onDataInsert()
                open()
                }else{
                 toast.show("Something went wrong", {
@@ -255,7 +250,7 @@ export default function UserOrder({item}:{item:Props}){
                 <Button onPress={()=>cancel(item)} disabled={isLoading}>Cancel Order</Button>
                 </>
               )}
-              <Button onPress={()=>order(item)} disabled={status==='REACHED'?true:false}>Done</Button>
+              <Button onPress={()=>order(item)} disabled={isLoading || status==='REACHED'?true:false}>Done</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
