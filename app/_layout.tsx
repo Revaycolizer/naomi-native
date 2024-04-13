@@ -63,7 +63,7 @@ function RootLayoutNav() {
         <Stack.Screen name="add" options={{ presentation: 'modal'  ,title:"Upload a product"}} />
         <Stack.Screen name="addCategory" options={{ presentation: 'modal'  ,title:"Upload category"}} />
         <Stack.Screen name="modal" options={{ presentation: 'modal',title:"Upload category" }} />
-        
+        <Stack.Screen name="cat" options={{ presentation: 'modal',title:"Category" }} />
       </Stack>
       </ToastProvider>
       </PaperProvider>

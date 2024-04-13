@@ -37,7 +37,7 @@ export default function AdminOrder({item}:{item:Props}){
     const data = [
       
         {key:'1', value:status,},
-        {key:'2', value:'REACHED'},
+        {key:'2', value:status ==='REACHED'?'SHIPPING':'REACHED'},
        
       
     ]
@@ -67,7 +67,7 @@ export default function AdminOrder({item}:{item:Props}){
       const deliverId=item.id
       // const status=item.status
       const data ={deliverId,status}
-      alert(status)
+      setLoading(true)
       if(status&&deliverId){
    
         try{
@@ -195,7 +195,7 @@ export default function AdminOrder({item}:{item:Props}){
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={open}>Cancel</Button>
-              <Button onPress={()=>order(item)}>Done</Button>
+              <Button onPress={()=>order(item)} disabled={isLoading}>Done</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>

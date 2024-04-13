@@ -29,6 +29,7 @@ export default function Products({item}:{item:Props}){
       const name=item.name
       const src=item.src
       const originalPrice = item.price
+      setLoading(true)
       const data ={phone,name,amount,location,price,src,originalPrice}
       if(location && phone && amount && price){
    
@@ -167,7 +168,7 @@ export default function Products({item}:{item:Props}){
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={open}>Cancel</Button>
-              <Button onPress={()=>order(item)}>Done</Button>
+              <Button onPress={()=>order(item)} disabled={isLoading}>Done</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>

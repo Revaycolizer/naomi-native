@@ -31,13 +31,14 @@ export default function ProAdmin({item}:{item:Props}){
     const order=async(item:any)=>{
       const name=item.name
       const src=item.src
+      const id=item.id
       const originalPrice = item.price
-      const data ={phone,name,amount,location,price,src,originalPrice}
-      if(location && phone && amount && price){
-   
+      const data ={name,price,id}
+      if(name && price){
+   setLoading(true)
         try{
-            const response = await fetch('https://food-bac.vercel.app/api/order',{
-                method:"POST"
+            const response = await fetch(`https://food-bac.vercel.app/api/create/${item.id}`,{
+                method:"PATCH"
                ,
                
                body:JSON.stringify(data),
@@ -50,7 +51,7 @@ export default function ProAdmin({item}:{item:Props}){
                 // setSession(token.userData)
                 console.log(token)
                
-                toast.show(`${token.name} ordered successfully`, {
+                toast.show(`${item.name} edited successfully`, {
                     type: " success",
                     placement: "top",
                     duration: 4000,
@@ -84,6 +85,66 @@ export default function ProAdmin({item}:{item:Props}){
     
     
     }
+
+    const del=async(item:any)=>{
+      const name=item.name
+      const src=item.src
+      const id=item.id
+      const originalPrice = item.price
+      const data ={id}
+      setLoading(true)
+      if(name && price){
+   
+        try{
+            const response = await fetch(`https://food-bac.vercel.app/api/create/${item.id}`,{
+                method:"DELETE"
+               ,
+               
+               body:JSON.stringify(data),
+               headers:{
+                Authorization:`Bearer ${user}`
+            }})
+               if(response.status == 200){
+                const  token  = await response.json();
+                // setUser(token.tokeni)
+                // setSession(token.userData)
+                console.log(token)
+               
+                toast.show(`${item.name} deleted successfully`, {
+                    type: " success",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                  });
+               open()
+               }else{
+                toast.show("Something went wrong", {
+                    type: " success",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                  });
+                console.log(response)
+               }
+        }catch(error){
+            console.error(error)
+        }finally{
+            setLoading(false)
+        }
+    }else{
+        toast.show("Missing fields", {
+            type: " success",
+            placement: "top",
+            duration: 4000,
+            animationType: "slide-in",
+          });
+          setLoading(false)
+          open()
+    }
+    
+    
+    }
+
 
     const open =()=>{
         setOpen(prevState=>(!prevState))
@@ -145,7 +206,7 @@ export default function ProAdmin({item}:{item:Props}){
 //               }
                mode="outlined"
                style={styles.input}
-               placeholder='0756'
+               placeholder='Price'
                outlineColor="blue"
                activeOutlineColor="purple"
                keyboardType="numeric"
@@ -156,7 +217,8 @@ export default function ProAdmin({item}:{item:Props}){
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={open}>Cancel</Button>
-              <Button onPress={()=>order(item)}>Done</Button>
+              <Button onPress={()=>del(item)} disabled={isLoading}>Delete</Button>
+              <Button onPress={()=>order(item)} disabled={isLoading}>Done</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>

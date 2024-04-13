@@ -1,4 +1,6 @@
-import { Image, View,StyleSheet,Text } from "react-native";
+import { setB } from "@/zustand";
+import { useRouter } from "expo-router";
+import { Image, View,StyleSheet,Text, Pressable } from "react-native";
 import { Button } from "react-native-paper";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -10,15 +12,21 @@ interface Props{
 }
 
 export default function Category({item}:{item:Props}){
+    const router = useRouter()
+    const [bidha,setBidhaa]=setB((state)=>[state.bidha,state.setBidhaa])
+    const oi = (item:any)=>{
+     setBidhaa(item)
+     router.push("/cat")
+    }
 
     return(
     <View style={styles.container}>
-        <View style={styles.l}>
+        <Pressable style={styles.l} onPress={()=>oi(item)}>
         <Image source={{uri:item.src}} alt="Product" style={styles.image}/>
         
         <Text style={styles.text}>{item.name}</Text>
        
-        </View>
+        </Pressable>
     </View>
     )
 }

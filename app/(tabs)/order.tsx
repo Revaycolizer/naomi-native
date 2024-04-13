@@ -100,7 +100,7 @@ console.log(error)
        showsVerticalScrollIndicator={false}
        showsHorizontalScrollIndicator={false}
       //  refreshControl={true}
-        numColumns={2}
+        numColumns={1}
         data={products}
         renderItem={({ item }) => <AdminOrder key={item.id} item={item} />}
         keyExtractor={(item) => item.id}
@@ -122,7 +122,7 @@ console.log(error)
        showsVerticalScrollIndicator={false}
        showsHorizontalScrollIndicator={false}
       //  refreshControl={true}
-        numColumns={2}
+        numColumns={1}
         data={products}
         renderItem={({ item }) => <UserOrder key={item.id} item={item} />}
         keyExtractor={(item) => item.id}

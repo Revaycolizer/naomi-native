@@ -55,12 +55,14 @@ export default function UserOrder({item}:{item:Props}){
     
     const order=async(item:any)=>{
       const name=item.name
+      const deliverId=item.id
       const src=item.src
-      const data ={phone,name,amount,location,price,src}
+      const data ={phone,name,amount,location,price,src,deliverId}
       if(location && phone && amount && price){
+        setLoading(true)
    
         try{
-            const response = await fetch('https://food-bac.vercel.app/api/order',{
+            const response = await fetch('https://food-bac.vercel.app/api/edit-order',{
                 method:"POST"
                ,
                
@@ -74,12 +76,72 @@ export default function UserOrder({item}:{item:Props}){
                 // setSession(token.userData)
                 console.log(token)
                
-                toast.show(`${token.name} ordered successfully`, {
+                toast.show(`${token.name} edited successfully`, {
                     type: " success",
                     placement: "top",
                     duration: 4000,
                     animationType: "slide-in",
                   });
+                  setLoading(false)
+               open()
+               }else{
+                toast.show("Something went wrong", {
+                    type: " success",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                  });
+                console.log(response)
+               }
+        }catch(error){
+            console.error(error)
+        }finally{
+            setLoading(false)
+        }
+    }else{
+        toast.show("Missing fields", {
+            type: " success",
+            placement: "top",
+            duration: 4000,
+            animationType: "slide-in",
+          });
+          setLoading(false)
+          open()
+    }
+    
+    
+    }
+
+    const cancel=async(item:any)=>{
+      const name=item.name
+      const deliverId=item.id
+      const src=item.src
+      const data ={deliverId}
+      if(deliverId){
+        setLoading(true)
+   
+        try{
+            const response = await fetch('https://food-bac.vercel.app/api/cancel',{
+                method:"POST"
+               ,
+               
+               body:JSON.stringify(data),
+               headers:{
+                Authorization:`Bearer ${user}`
+            }})
+               if(response.status == 200){
+                const  token  = await response.json();
+                // setUser(token.tokeni)
+                // setSession(token.userData)
+                console.log(token)
+               
+                toast.show(`${item.name} cancelled successfully`, {
+                    type: " success",
+                    placement: "top",
+                    duration: 4000,
+                    animationType: "slide-in",
+                  });
+                  setLoading(false)
                open()
                }else{
                 toast.show("Something went wrong", {
@@ -149,6 +211,7 @@ export default function UserOrder({item}:{item:Props}){
                 value={location}
                 onChangeText={handleLocationChange}
                 placeholder="Edit location"
+                disabled={status==='REACHED'?true:false}
             />
 
             <TextInput
@@ -156,6 +219,7 @@ export default function UserOrder({item}:{item:Props}){
                 value={phone}
                 onChangeText={handlePhoneChange}
                 placeholder="Edit phone"
+                disabled={status==='REACHED'?true:false}
             />
 
             <TextInput
@@ -163,6 +227,7 @@ export default function UserOrder({item}:{item:Props}){
                 value={amount}
                 onChangeText={handleAmountChange}
                 placeholder="Edit amount"
+                disabled={status==='REACHED'?true:false}
             />
 
             <TextInput
@@ -182,8 +247,15 @@ export default function UserOrder({item}:{item:Props}){
                
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={open}>Cancel</Button>
-              <Button onPress={()=>order(item)}>Done</Button>
+              {status==='REACHED'?
+              (
+              <Button onPress={open}>Cancel</Button>):(
+                <>
+                <Button onPress={open}>Cancel</Button>
+                <Button onPress={()=>cancel(item)} disabled={isLoading}>Cancel Order</Button>
+                </>
+              )}
+              <Button onPress={()=>order(item)} disabled={status==='REACHED'?true:false}>Done</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
