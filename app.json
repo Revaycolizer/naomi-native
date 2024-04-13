@@ -20,9 +20,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.food.naomi"
     },
     "web": {
       "bundler": "metro",
@@ -30,10 +31,27 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+      "expo-build-properties",
+      {
+        "android": {
+          "minSdkVersion": 24
+          
+        }
+      }
+    ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ee69471f-7735-49d3-b194-f5bfbe6c1bb6"
+      }
     }
   }
 }
