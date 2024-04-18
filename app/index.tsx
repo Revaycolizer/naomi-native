@@ -4,6 +4,7 @@ import { useRouter } from "expo-router"
 import { useEffect, useState } from "react"
 import { StyleSheet,View,Text, BackHandler } from "react-native"
 import { ActivityIndicator, Icon, MD2Colors } from "react-native-paper"
+import HomeIP from "./login"
 
 
 export default function User(){
@@ -36,24 +37,25 @@ export default function User(){
                     Authorization: `Bearer ${user}`,
                   },
                 });
-              
+                // alert(use.status)
                 if (use.status === 401) {
-                 
+                 setIsLoading(true)
                   router.replace("/login");
                 } 
                 
                 else if(use.status === 500){
+                    setIsLoading(true)
                   router.replace("/login");
                 }
                 else {
                   const data = await use.json();
                   if (use.status === 200) {
                     setSession(data);
-                    setIsLoading(false);
+                    setIsLoading(true);
                     router.replace("/(tabs)/home");
                   } else {
                     // setSession(data);
-                    setIsLoading(false);
+                    setIsLoading(true);
                     router.replace("/login");
                   }
                 }
@@ -66,13 +68,13 @@ export default function User(){
 getUser()
     },[])
 
-    if(!isloading){
+    if(isloading){
         return <ActivityIndicator size={"large"} animating={true} color={MD2Colors.red800} style={{flex:1,alignItems:"center",justifyContent:"center"}}/>
     }
 
     return(
-        <View style={styles.lo}>
-           
+        <View style={styles.i}>
+           <HomeIP/>
             </View>
     )
 }
@@ -85,5 +87,10 @@ lo:{
     padding:4,
     marginHorizontal:16,
     margin:8
+},
+i:{
+  display:"flex",
+  justifyContent:"center",
+  alignItems:"center"
 }
 })
