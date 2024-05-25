@@ -30,17 +30,19 @@ export default function Home(){
       }, [session?.role]); 
 
       const fetchAdminData = async () => {
-   const cat =bidha?.name
-        const data = await fetch(`https://food-bac.vercel.app/api/product/${bidha?.id}`
+        const cat =bidha?.name
+   const data ={cat}
+   
+        const dat = await fetch(`https://food-bac.vercel.app/api/our`
         ,
         {
             method:"POST",
                
-        body:JSON.stringify(cat),
+        body:JSON.stringify(data),
       }
         )
 
-        const i = await data.json()
+        const i = await dat.json()
 
         setD(i)
         console.log('Fetching admin data...',i);
@@ -51,15 +53,17 @@ export default function Home(){
       const fetchUserData = async () => {
         setIsLoading(true)
         const cat =bidha?.name
+        const data ={cat}
+
         try{
-        const data = await fetch(`https://food-bac.vercel.app/api/product/${bidha?.id}`  ,
+        const dat = await fetch(`https://food-bac.vercel.app/api/our`  ,
         {
             method:"POST",
                
-        body:JSON.stringify(cat),
+        body:JSON.stringify(data),
       })
 
-        const i = await data.json()
+        const i = await dat.json()
       if(i){
         setD(i)
         console.log('Fetching user data...');

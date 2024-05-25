@@ -9,7 +9,7 @@ import uuid from 'react-native-uuid';
 import { useRouter } from "expo-router";
 import { useToast } from "react-native-toast-notifications";
 import axios from "axios"
-import { decode } from 'base64-arraybuffer'
+
 import { useUser } from "@/zustand";
 
 const items = [

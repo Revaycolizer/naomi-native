@@ -8,11 +8,13 @@ import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export default function TabTwoScreen() {
   const [session,setSession]=userSession((state)=>[state.session,state.setSession])
   const [user,setUser]=useUser((state)=>[state.user,state.setUser])
 const navigation =useNavigation()
+const router = useRouter() 
   const logout=()=>{
     setSession(null)
     setUser(null)
@@ -25,6 +27,20 @@ const navigation =useNavigation()
     <SafeAreaView>
       <StatusBar style="light"/>
       <Text></Text>
+      {session?.role === "USER" && (
+      <Pressable style={styles.lo} onPress={()=>router.push("/cart")}>
+        <FontAwesome
+        name="shopping-cart"
+        color='blue'
+        size={20}
+        />
+        <Text>Cart</Text>
+        <Icon
+        source="chevron-right"
+        color="black"
+        size={20}
+        />
+      </Pressable>)}
       <Text style={styles.text}>For more information</Text>
       <Pressable style={styles.lo} onPress={()=>Linking.openURL('https://wa.me/+255769742628')}>
         <Icon

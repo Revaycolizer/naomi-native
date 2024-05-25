@@ -1,4 +1,4 @@
-import { useUser } from "@/zustand";
+import { useProduct, useUser } from "@/zustand";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, View,StyleSheet,Text } from "react-native";
@@ -20,9 +20,24 @@ export default function Products({ item, onDataInsert }: UserOrderProps){
     const [user,setUser]= useUser((state)=>[state.user,state.setUser])
     const router = useRouter()
     const [isLoading,setLoading]=useState(false)
+    const [products,setProduct] = useProduct((state)=>[state.products,state.setProduct])
     
     const toast = useToast()
     
+    const list =(pro:any)=>{
+      const i ={
+        ...pro,amount,price,
+        originalPrice:pro.price
+      }
+      setProduct(i)
+      toast.show(`${pro.name} added to list`, {
+        type: " success",
+        placement: "top",
+        duration: 4000,
+        animationType: "slide-in",
+      });
+      open()
+    }
     const order=async(item:any)=>{
       const name=item.name
       const src=item.src
@@ -118,7 +133,7 @@ export default function Products({ item, onDataInsert }: UserOrderProps){
             <Dialog.Title>Buy {item.name}</Dialog.Title>
             <Dialog.Content>
               {/* <Text >{item.name}</Text> */}
-              <TextInput
+              {/* <TextInput
                
                mode="outlined"
                style={styles.input}
@@ -127,19 +142,10 @@ export default function Products({ item, onDataInsert }: UserOrderProps){
                activeOutlineColor="purple"
                value={location}
                onChangeText={(location)=>setL(location)}
-               />
+               /> */}
 
-              <TextInput
-//               render={props =>
-//                 <TextInputMask
-                
-//   onChangeText={(formatted, extracted) => {
-//     console.log(formatted) // +1 (123) 456-78-90
-//     console.log(extracted) // 1234567890
-//   }}
-//   mask={"+255 ([000]) [000] [00] [00]"}
-// />
-//               }
+              {/* <TextInput
+
                mode="outlined"
                style={styles.input}
                placeholder='0756'
@@ -148,7 +154,7 @@ export default function Products({ item, onDataInsert }: UserOrderProps){
                keyboardType="numeric"
                value={phone}
                onChangeText={(phone)=>setP(phone)}
-               />
+               /> */}
 
 <TextInput
                
@@ -167,7 +173,7 @@ export default function Products({ item, onDataInsert }: UserOrderProps){
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={open}>Cancel</Button>
-              <Button onPress={()=>order(item)} disabled={isLoading}>Done</Button>
+              <Button onPress={()=>list(item)} disabled={isLoading}>Done</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>

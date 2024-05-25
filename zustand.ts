@@ -35,6 +35,25 @@ type Bidhaa ={
   bidha:any
 }
 
+type Product = {
+  id:string;
+  name: string;
+  amount: number;
+  src:string;
+  price:string;
+};
+
+type assignProduct = {
+  setProduct: (assign: Product) => void;
+};
+
+interface ProductState {
+  products: Product[];
+  setProduct: (product: Product) => void;
+  deleteProduct: (productId: string) => void;
+  clearProducts: () => void;
+}
+
 type assignBidhaa={
   setBidhaa:(assign:Bidhaa['bidha'])=>void
 }
@@ -54,7 +73,7 @@ export const useUser = create<User & userAction>()(
     }),
     {
       name: 'user-storage',
-      storage: createJSONStorage(() =>  AsyncStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )
@@ -67,7 +86,24 @@ export const userSession = create<Session & userSession>()(
     }),
     {
       name: 'session-storage',
-      storage: createJSONStorage(() =>  AsyncStorage),
+      storage: createJSONStorage(() =>  localStorage),
+    }
+  )
+)
+
+export const useProduct = create<ProductState>()(
+  persist(
+    (set) => ({
+      products:[],
+      setProduct: (newProduct: any) => set((state) => ({ products:  [...state.products, newProduct]})),
+      deleteProduct: (productId:any) => set((state) => ({
+        products: state.products.filter((product) => product.id !== productId)
+      })),
+      clearProducts: () => set({ products: [] })
+    }),
+    {
+      name: 'product-storage',
+      storage: createJSONStorage(() =>  localStorage),
     }
   )
 )
@@ -81,7 +117,7 @@ export const setB = create<Bidhaa & assignBidhaa>()(
     }),
     {
       name: 'bidhaa-storage',
-      storage: createJSONStorage(() =>  AsyncStorage),
+      storage: createJSONStorage(() =>  localStorage),
     }
   )
 )
@@ -95,7 +131,7 @@ export const userAssign = create<Assign & assignUser>()(
     }),
     {
       name: 'sessin-storage',
-      storage: createJSONStorage(() =>  AsyncStorage),
+      storage: createJSONStorage(() =>  localStorage),
     }
   )
 )

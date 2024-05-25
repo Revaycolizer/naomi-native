@@ -12,7 +12,7 @@ import { useToast } from "react-native-toast-notifications";
 
 
 
-export default function IP(){
+export default function HomeIP(){
 const [email,setEmail] = useState('')
 const[password,setPass]=useState('')
 const [isLoading,setLoading]=useState(false)
