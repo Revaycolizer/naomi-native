@@ -22,7 +22,7 @@ export default function Category({item}:{item:Props}){
     return(
     <View style={styles.container}>
         <Pressable style={styles.l} onPress={()=>oi(item)}>
-        <Image source={{uri:item.src}} alt="Product" style={styles.image}/>
+        <Image source={{uri:item.src}} resizeMode="contain" alt="Product" style={styles.image}/>
         
         <Text style={styles.text}>{item.name}</Text>
        

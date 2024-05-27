@@ -6,15 +6,20 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { useToast } from "react-native-toast-notifications";
 
 export default function Cart(){
-    const [products,clearProducts] = useProduct((state)=>[state.products,state.clearProducts])
+    const [products,clearProducts,deleteProduct] = useProduct((state)=>[state.products,state.clearProducts,state.deleteProduct])
     const [location,setL]=useState("")
     const [phone,setP]=useState("")
     const [isLoading,setLoading]=useState(false)
     const [user,setUser]= useUser((state)=>[state.user,state.setUser])
     console.log(products)
+    const totalAmount:any =products?.reduce((accumulator:any,item:any) => accumulator + item.price,'Tzs');
     const toast = useToast()
   const o = ()=>{
    clearProducts()
+  }
+
+  const remove=(itemId:any)=>{
+    deleteProduct(itemId)
   }
     const order=async(item:any)=>{
         const name=item.name
@@ -125,13 +130,13 @@ export default function Cart(){
         </View>
               
            
-    {/* <Button rippleColor="red"  style={styles.inbtn} onPress={order}>Order Now</Button> */}
+    <Button rippleColor="red"  style={styles.inbtn} onPress={()=>remove(item.id)}>Remove</Button>
      </ScrollView>  }
             
         keyExtractor={(item) => item.id}
         style={{marginHorizontal: 4 }}
       />
-            
+            <Text>{totalAmount}</Text>
             
     <Button rippleColor="red"  style={styles.inbtn} onPress={order}>Order Now</Button> 
             </ScrollView>):(

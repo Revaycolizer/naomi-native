@@ -180,7 +180,7 @@ export default function Products({ item, onDataInsert }: UserOrderProps){
             </View>
         
         <View style={styles.l}>
-        <Image source={{uri:item.src}} alt="Product" style={styles.image}/>
+        <Image source={{uri:item.src}} resizeMode="contain" alt="Product" style={styles.image}/>
         
         <Text style={styles.text}>{item.name}</Text>
         <Text style={styles.text}>{item.price} Tzs</Text>
