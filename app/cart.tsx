@@ -78,7 +78,7 @@ export default function Cart(){
     }
       
     return(
-        <View>
+        <ScrollView>
         {products?.length > 0 ? (
         <ScrollView>
             
@@ -110,10 +110,13 @@ export default function Cart(){
        showsVerticalScrollIndicator={false}
        showsHorizontalScrollIndicator={false}
       //  refreshControl={true}
+      scrollEnabled={true}
         numColumns={2}
         data={products}
-        renderItem={({ item }) =><View>  <View style={styles.l}>
-        <Image source={{uri:item?.src}} alt="Product" style={styles.image}/>
+        renderItem={({ item }) =><ScrollView>  <View style={styles.l}>
+          
+        <Image source={{uri:item?.src}} resizeMode="contain" alt="Product" style={styles.image}/>
+       
         
         <Text style={styles.text}>{item?.name}</Text>
         <Text style={styles.text}>{item?.price} Tzs</Text>
@@ -123,7 +126,7 @@ export default function Cart(){
               
            
     {/* <Button rippleColor="red"  style={styles.inbtn} onPress={order}>Order Now</Button> */}
-     </View>  }
+     </ScrollView>  }
             
         keyExtractor={(item) => item.id}
         style={{marginHorizontal: 4 }}
@@ -140,7 +143,7 @@ export default function Cart(){
         
         }
 
-            </View>
+            </ScrollView>
 
     )
 }
@@ -177,8 +180,9 @@ const styles = StyleSheet.create({
       gap:6
     },
     image: {
-      width: wp('44%'),
-      height:hp("20%"),
+      width: wp('40%'),
+      height:hp("30%"),
+      objectFit:"scale-down"
     },
     input:{
         borderRadius:32,
