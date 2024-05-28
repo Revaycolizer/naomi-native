@@ -12,7 +12,9 @@ export default function Cart(){
     const [isLoading,setLoading]=useState(false)
     const [user,setUser]= useUser((state)=>[state.user,state.setUser])
     console.log(products)
-    const totalAmount:any =products?.reduce((accumulator:any,item:any) => accumulator + item.price,'Tzs');
+    
+    const totalAmount = products?.reduce((accumulator:any, item:any) => accumulator + Number(item.price), 0);
+const totalAmountWithCurrency = `Tzs${totalAmount}`;
     const toast = useToast()
   const o = ()=>{
    clearProducts()
@@ -28,8 +30,8 @@ export default function Cart(){
         setLoading(true)
         const dat = products.map((product) => ({
             ...product,
-            location, // Assuming `location` is already defined
-            phone // Assuming `phone` is already defined
+            location, 
+            phone 
           }));
         const data = JSON.parse(JSON.stringify(dat))
         if(phone && location){
@@ -49,7 +51,7 @@ export default function Cart(){
                   console.log(token)
                   clearProducts()
                  
-                  toast.show(`${token.name} ordered successfully`, {
+                  toast.show(`Ordered successfully`, {
                       type: " success",
                       placement: "top",
                       duration: 4000,
@@ -136,7 +138,7 @@ export default function Cart(){
         keyExtractor={(item) => item.id}
         style={{marginHorizontal: 4 }}
       />
-            <Text>{totalAmount}</Text>
+            <Text style={{textAlign:"center"}}>{totalAmountWithCurrency}</Text>
             
     <Button rippleColor="red"  style={styles.inbtn} onPress={order}>Order Now</Button> 
             </ScrollView>):(
